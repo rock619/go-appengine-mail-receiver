@@ -1,0 +1,8 @@
+runtime: go115
+
+inbound_services:
+  - warmup
+  - mail
+
+includes:
+  - "env.yaml"
