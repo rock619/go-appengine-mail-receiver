@@ -19,4 +19,4 @@ jobs:
         run: |
           # This client-secret.json is converted by GCP_SA_KEY.
           gcloud auth activate-service-account ${{ secrets.GCP_SA_EMAIL }} --key-file=client-secret.json
-          gcloud app deploy --project=${{ secrets.GCP_PROJECT }} --no-promote
+          gcloud app deploy ./appengine/app.yaml --project=${{ secrets.GCP_PROJECT }} --no-promote
