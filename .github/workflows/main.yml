@@ -5,18 +5,20 @@ on: push
 jobs:
   deploy-appengine:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./appengine
     steps:
       - uses: actions/checkout@v2
-      - name: Initialize Google Cloud SDK
-        uses: zxyle/publish-gae-action@master
+      - uses: microsoft/variable-substitution@v1
         with:
-          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          files: app.yaml
+        env:
+          env_variables.RAW_EML_BUCKET: ${{ secrets.RAW_EML_BUCKET }}
+      - name: Deploy to App Engine
+        uses: google-github-actions/deploy-appengine@v0.2.0
+        with:
+          deliverables: app.yaml
           project_id: ${{ secrets.GCP_PROJECT }}
-          gae_variables: ${{ secrets.GAE_VARIABLES }}
-          gae_config_path: './appengine/app.yaml'
-      - name: Publish app to Google App Engine
-        run: |
-          # This client-secret.json is converted by GCP_SA_KEY.
-          gcloud auth activate-service-account ${{ secrets.GCP_SA_EMAIL }} --key-file=client-secret.json
-          gcloud app deploy ./appengine/app.yaml --project=${{ secrets.GCP_PROJECT }} --no-promote
+          credentials: ${{ secrets.GCP_SA_KEY }}
+          promote: false
