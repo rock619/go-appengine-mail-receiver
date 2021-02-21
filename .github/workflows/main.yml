@@ -5,9 +5,6 @@ on: push
 jobs:
   deploy-appengine:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./appengine
     steps:
       - uses: actions/checkout@v2
       - uses: microsoft/variable-substitution@v1
@@ -15,6 +12,7 @@ jobs:
           files: app.yaml
         env:
           env_variables.RAW_EML_BUCKET: ${{ secrets.RAW_EML_BUCKET }}
+        working-directory: ./appengine
       - name: Deploy to App Engine
         uses: google-github-actions/deploy-appengine@v0.2.0
         with:
@@ -22,3 +20,4 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT }}
           credentials: ${{ secrets.GCP_SA_KEY }}
           promote: false
+        working-directory: ./appengine
