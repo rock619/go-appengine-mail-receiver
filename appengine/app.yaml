@@ -4,5 +4,5 @@ inbound_services:
   - warmup
   - mail
 
-includes:
-  - "env.yaml"
+env_variables:
+  RAW_EML_BUCKET: $RAW_EML_BUCKET

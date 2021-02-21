@@ -56,7 +56,7 @@ func mailHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Print("Start receiving a mail\n")
 
-	obj := client.Bucket(os.Getenv("BUCKET_NAME")).Object(fmt.Sprintf("mail/%d.eml", time.Now().UnixNano()))
+	obj := client.Bucket(os.Getenv("RAW_EML_BUCKET")).Object(fmt.Sprintf("%d.eml", time.Now().UnixNano()))
 	ctx := context.Background()
 	wc := obj.NewWriter(ctx)
 
