@@ -3,16 +3,16 @@ name: Deploy AppEngine
 on: push
 
 jobs:
-  build:
+  deploy-appengine:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: appengine
     steps:
       - uses: actions/checkout@v2
-
       - uses: ikuanyshbekov/app-yaml-env-compiler@v1.0
         env:
           RAW_EML_BUCKET: ${{ secrets.RAW_EML_BUCKET }}
-
       - name: Deploy to App Engine
         uses: google-github-actions/deploy-appengine@v0.2.0
         with:
