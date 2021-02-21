@@ -5,4 +5,4 @@ inbound_services:
   - mail
 
 env_variables:
-  RAW_EML_BUCKET: $RAW_EML_BUCKET
+  RAW_EML_BUCKET:
