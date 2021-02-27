@@ -1,6 +1,9 @@
 name: Deploy AppEngine
 
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   deploy-appengine:
