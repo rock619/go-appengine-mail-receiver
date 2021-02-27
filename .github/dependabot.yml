@@ -1,5 +1,11 @@
 version: 2
 updates:
+  - package-ecosystem: 'gomod'
+    directory: '/appengine'
+    schedule:
+      interval: 'daily'
+    reviewers:
+      - 'rock619'
   - package-ecosystem: 'npm'
     directory: '/firebase/functions'
     schedule:
