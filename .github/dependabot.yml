@@ -1,9 +1,8 @@
-version: 1
-update_configs:
-  - package_manager: "javascript"
-    directory: "/"
-    update_schedule: "live"
-    default_reviewers:
-      - "rock619"
-    default_assignees:
-      - "rock619"
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/firebase/functions'
+    schedule:
+      interval: 'daily'
+    reviewers:
+      - 'rock619'
