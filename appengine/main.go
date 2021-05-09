@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/http/httputil"
 	"os"
 	"time"
 
@@ -130,13 +131,16 @@ func mailHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	logRequest(r, fmt.Sprintf("received a mail. name: %s\n", name))
+	dump, _ := httputil.DumpRequest(r, false)
+	logRequest(r, fmt.Sprintf("request: %s", dump))
 }
 
 func errorHandler(w http.ResponseWriter, r *http.Request, err error) {
 	status := http.StatusInternalServerError
 	http.Error(w, http.StatusText(status), status)
+	dump, _ := httputil.DumpRequest(r, false)
 	logger.Log(logging.Entry{
-		Payload: err,
+		Payload: fmt.Sprintf("error: %v request: %s", err, dump),
 		HTTPRequest: &logging.HTTPRequest{
 			Request: r,
 			Status:  status,
