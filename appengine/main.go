@@ -2,11 +2,13 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"net/http/httputil"
 	"os"
+	"strings"
 	"time"
 
 	"cloud.google.com/go/logging"
@@ -112,6 +114,11 @@ func logRequest(r *http.Request, payload interface{}) {
 func mailHandler(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
+	if strings.HasPrefix(r.URL.Path, "/_ah/mail/500") {
+		errorHandler(w, r, errors.New("error response test"))
+		return
+	}
+
 	name := fmt.Sprintf("%d.eml", time.Now().UnixNano())
 	logRequest(r, fmt.Sprintf("Start receiving a mail. name: %s", name))
 
@@ -121,7 +128,6 @@ func mailHandler(w http.ResponseWriter, r *http.Request) {
 
 	if _, err := io.Copy(wc, r.Body); err != nil {
 		errorHandler(w, r, fmt.Errorf("error saving to the storage: %w", err))
-
 		return
 	}
 
