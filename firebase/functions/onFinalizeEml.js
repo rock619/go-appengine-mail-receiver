@@ -1,19 +1,19 @@
 const functions = require('firebase-functions');
-const simpleParser = require('mailparser').simpleParser;
+// const simpleParser = require('mailparser').simpleParser;
 const admin = require('firebase-admin');
 
 if (!admin.apps.length) admin.initializeApp();
-const storage = admin.storage();
+// const storage = admin.storage();
 
 const bucket = functions.config().bucket.dest;
 
-const newAttachments = (attachments) =>
-  attachments.map((m) => ({
-    ...m,
-    headers: Object.fromEntries(m.headers),
-  }));
+// const newAttachments = (attachments) =>
+//   attachments.map((m) => ({
+//     ...m,
+//     headers: Object.fromEntries(m.headers),
+//   }));
 
-const headers = (headers) => Object.fromEntries(headers);
+// const headers = (headers) => Object.fromEntries(headers);
 
 exports.onFinalizeEml = functions
   .region('asia-northeast1', 'asia-northeast2')
