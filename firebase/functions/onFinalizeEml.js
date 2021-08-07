@@ -16,11 +16,13 @@ const newAttachments = (attachments) =>
 const headers = (headers) => Object.fromEntries(headers);
 
 exports.onFinalizeEml = functions
-  .region('asia-northeast1')
+  .region('asia-northeast1', 'asia-northeast2')
   .runWith({ memory: '1GB' })
   .storage.bucket(bucket)
   .object()
-  .onFinalize(async (object) => {
+  .onFinalize(async (object, context) => {
+    functions.logger.debug('begin', context);
+
     if (!object.name.endsWith('.eml')) return;
 
     const mail = await simpleParser((await storage.bucket(object.bucket).file(object.name).download())[0]);
