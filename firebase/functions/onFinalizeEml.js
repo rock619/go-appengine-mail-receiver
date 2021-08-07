@@ -23,12 +23,10 @@ exports.onFinalizeEml = functions
   .onFinalize(async (object, context) => {
     functions.logger.debug('begin', context);
 
-    if (!object.name.endsWith('.eml')) return;
+    // const mail = await simpleParser((await storage.bucket(object.bucket).file(object.name).download())[0]);
+    // mail.type = 'email';
+    // mail.attachments = newAttachments(mail.attachments);
+    // mail.headers = headers(mail.headers);
 
-    const mail = await simpleParser((await storage.bucket(object.bucket).file(object.name).download())[0]);
-    mail.type = 'email';
-    mail.attachments = newAttachments(mail.attachments);
-    mail.headers = headers(mail.headers);
-
-    await storage.bucket(object.bucket).file(object.name.replace('.eml', '.json')).save(JSON.stringify(mail));
+    // await storage.bucket(object.bucket).file(object.name.replace('.eml', '.json')).save(JSON.stringify(mail));
   });
