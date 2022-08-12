@@ -4,5 +4,5 @@ go 1.15
 
 require (
 	cloud.google.com/go/logging v1.4.2
-	cloud.google.com/go/storage v1.16.0
+	cloud.google.com/go/storage v1.25.0
 )
